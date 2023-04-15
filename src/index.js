@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 
-app.use('/api', indexRoutes);
-app.use('/api', employeesRoutes);
+app.use('/user', indexRoutes);
+app.use('/user', employeesRoutes);
 
 app.listen(3000);

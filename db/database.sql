@@ -9,4 +9,4 @@ CREATE TABLE employe(
 
 DECRIBE employe;
 
-INSERT INTO employee VALUES (1, 'Henry', 1000), (2, 'Joe', 2546), (3, 'Sam', 1234), (4, 'Max', 2000);
+INSERT INTO employee VALUES (1, 'Henry', 1000), (2, 'Joe', 2546), (3, 'Sam', 1234), (4, 'Max', 2000)

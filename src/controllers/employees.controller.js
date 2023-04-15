@@ -3,7 +3,7 @@ import { pool } from "../db.js";
 /* Obtenemos todos los empleados */
 export const getEmployees = async (req, res) => {
     try {
-        const [rows] = await pool.query('SELECT * FROM employe');
+        const [rows] = await pool.query('SELECT * FROM employee');
         res.json(rows);
     } catch (error) {
         return res.status(500).json({ message: 'Algo salio mal' })
@@ -23,27 +23,29 @@ export const getEmployee = async (req, res) => {
     }
 }
 
-
 /* Para crear los empleados */
 export const createEmployees = async (req, res) => {
 
-    const { name, salary } = req.body;
+    const { name, lastName, email, rolUser } = req.body;
 
     try {
-        const [rows] = await pool.query('INSERT INTO employe (name, salary) VALUES (?, ?)', [name, salary]);
+        const [rows] = await pool.query('INSERT INTO employee (name, lastName, email, rolUser) VALUES (?, ?, ?, ?)', [name, lastName, email, rolUser]);
         res.send({
             id: rows.insertId,
             name,
-            salary,
+            lastName,
+            email,
+            rolUser,
         });
     } catch (error) {
         return res.status(500).json({ message: 'Algo salio mal' })
     }
 };
 
+/* Para Borrar los empleados */
 export const deleteEmployees = async (req, res) => {
     try {
-        const [result] = await pool.query('DELETE FROM employe WHERE id = ?', [req.params.id]);
+        const [result] = await pool.query('DELETE FROM employee WHERE id = ?', [req.params.id]);
         if (result.affectedRows <= 0) return res.status(404).json({
             message: 'Employee not fond'
         })
@@ -53,21 +55,23 @@ export const deleteEmployees = async (req, res) => {
     }
 };
 
-
-
+/* Para Actualizar los empleados */
 export const updateEmployees = async (req, res) => {
-    const { name, salary } = req.body;
+
     const { id } = req.params;
-    try {
-        const [result] = await pool.query('UPDATE employe SET name = IFNULL(?, name), salary = IFNULL(?, salary) WHERE id = ?',
-            [name, salary, id]);
-        if (result.affectedRows === 0) return res.status(404).json({
-            message: 'Employee not fond'
-        })
-        const [rows] = await pool.query('SELECT * FROM employe WHERE  id = ?', [id])
-        res.json(rows[0]);
-    } catch (error) {
-        return res.status(500).json({ message: 'Algo salio mal' })
-    }
+    const { name, lastName, email, rolUser } = req.body;
+
+    
+    // try {
+    //     const [result] = await pool.query('UPDATE employee SET name = IFNULL(?, name), lastName = IFNULL(?, lastName), email = IFNULL(?, email), + rolUser = IFNULL(?, rolUser) WHERE id = ?', [name, lastName, email, rolUser, id]);
+    //     if (result.affectedRows === 0) return res.status(404).json({
+    //         message: 'Employee not fond'
+    //     })
+    //     const [rows] = await pool.query('SELECT * FROM employe WHERE  id = ?', [id])
+    //     console.log(rows);
+        
+    // } catch (error) {
+    //     return res.status(500).json({ message: 'Algo salio mal' })
+    // }
 };
 
