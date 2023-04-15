@@ -5,5 +5,5 @@ export const pool = createPool({
     user: 'root',
     password: '123456Asd.',
     port: 3306,
-    database: 'userCompany'
+    database: 'companydb'
 });

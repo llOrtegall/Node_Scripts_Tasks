@@ -9,7 +9,7 @@ const router = Router();
 router.get('/employees', getEmployees);
 
 router.get('/employees/:id', getEmployee);
-//agregamos un parametro funcionalidad de express
+
 router.post('/employees', createEmployees);
 
 router.patch('/employees/:id', updateEmployees);

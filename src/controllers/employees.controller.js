@@ -57,21 +57,16 @@ export const deleteEmployees = async (req, res) => {
 
 /* Para Actualizar los empleados */
 export const updateEmployees = async (req, res) => {
-
     const { id } = req.params;
     const { name, lastName, email, rolUser } = req.body;
-
-    
-    // try {
-    //     const [result] = await pool.query('UPDATE employee SET name = IFNULL(?, name), lastName = IFNULL(?, lastName), email = IFNULL(?, email), + rolUser = IFNULL(?, rolUser) WHERE id = ?', [name, lastName, email, rolUser, id]);
-    //     if (result.affectedRows === 0) return res.status(404).json({
-    //         message: 'Employee not fond'
-    //     })
-    //     const [rows] = await pool.query('SELECT * FROM employe WHERE  id = ?', [id])
-    //     console.log(rows);
-        
-    // } catch (error) {
-    //     return res.status(500).json({ message: 'Algo salio mal' })
-    // }
-};
+    try {
+        const [result] = await pool.query('UPDATE employee SET name = IFNULL(?, name), lastName = IFNULL(?, lastName), email = IFNULL(?, email), rolUser = IFNULL(?, rolUser) WHERE id = ?',
+            [name, lastName, email, rolUser, id]);
+        if (result.affectedRows === 0) return res.status(404).json({ message: 'Employee not found' })
+        const [rows] = await pool.query('SELECT * FROM employee WHERE id = ?', [id]);
+        res.json(rows[0]);
+    } catch (error) {
+        return res.status(500).json({ message: 'Something went wrong' })
+    }
+}
 
