@@ -7,10 +7,10 @@ const PORT = 3000
 
 app.get('/ping', (_req, res) => {
     
-    console.log('Esta funcionando ¡¡¡' + new Date().toLocaleDateString())
+    console.log('Esta funcionando :D ' + new Date().toLocaleDateString())
     res.send('pong')
 })
 
 app.listen(PORT, () => {
-    console.log(`el servidor esta en el puerto, ${PORT}`)
+    console.log(`el servidor esta en el puerto: ${PORT}`)
 })
