@@ -6,4 +6,3 @@ const diaries: Array<DiaryEntry> = diaryData as Array<DiaryEntry>
 export const getEntries = () => diaries
 
 export const addEntry = () => null
-
