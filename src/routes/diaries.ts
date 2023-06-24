@@ -1,12 +1,12 @@
-import  express  from 'express'
+import express from 'express'
 
 const router = express.Router()
 
-router.get('/', (_req, res) => {
+router.get('/',(_req,res) => {
     res.send('Fecht all entry diaries')
 })
 
-router.post('/', (_req, res) => {
+router.post('/',(_req,res) => {
     res.send('Saving a diary ¡¡¡')
 })
 
