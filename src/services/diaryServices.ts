@@ -5,6 +5,12 @@ const diaries: DiaryEntry[] = diaryData as DiaryEntry[]
 
 export const getEntries = (): DiaryEntry[] => diaries
 
-export const getEntriesWithhoutSensitiveInfo = (): NonSensitiveInfoDiaryEntry[] => diaries
+export const getEntriesWithhoutSensitiveInfo = (): NonSensitiveInfoDiaryEntry[] => {
+  return diaries.map(({ id, date, weather, visibility }) => {
+    return {
+      id, date, weather, visibility
+    }
+  })
+}
 
 export const addEntry = (): undefined => undefined
