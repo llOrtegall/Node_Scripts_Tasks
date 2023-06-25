@@ -9,6 +9,6 @@ export interface DiaryEntry {
   comment: string
 }
 
-interface SpecialDiaryEntry extends DiaryEntry {
-  flightNumber: number
-}
+// export type NonSensitiveInfoDiaryEntry = Pick<DiaryEntry, 'id'|'date' | 'weather' | 'visibility'>
+
+export type NonSensitiveInfoDiaryEntry = Omit <DiaryEntry, 'comment'>
