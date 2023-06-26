@@ -1,4 +1,5 @@
-import { NewDiaryEntry, Visibility, Weather } from './types'
+import { NewDiaryEntry } from './types'
+import { Weather, Visibility } from './enums'
 
 // TODO: Validaciones de tipo
 const isDate = (date: string): boolean => {
