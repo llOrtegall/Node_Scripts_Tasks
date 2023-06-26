@@ -8,8 +8,8 @@ const isString = (string: string): boolean => {
   return typeof string === 'string' // || string instanceof String
 }
 
-const isWeather = (string: string): boolean => {
-  return ['sunny', 'rainy', 'cloudy', 'windy', 'stormy'].includes(string)
+const isWeather = (param: any): boolean => {
+  return Object.values(Weather).includes(param)
 }
 
 // TODO: Validaciones del request body
