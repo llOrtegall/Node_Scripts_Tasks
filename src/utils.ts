@@ -8,6 +8,10 @@ const isString = (string: string): boolean => {
   return typeof string === 'string' // || string instanceof String
 }
 
+const isWeather = (string: string): boolean => {
+  return ['sunny', 'rainy', 'cloudy', 'windy', 'stormy'].includes(string)
+}
+
 // TODO: Validaciones del request body
 const parseComment = (commentFromRequest: any): string => {
   if (!isString(commentFromRequest)) {
@@ -25,7 +29,10 @@ const parseDate = (dateFromRequest: any): string => {
 }
 
 const parseWeater = (weaterFromRequest: any): Weather => {
-
+  if (!isString(weaterFromRequest) || !isWeather(weaterFromRequest)) {
+    throw new Error('Incorrect or missing Weather')
+  }
+  return weaterFromRequest
 }
 
 const toNewDiaryEntry = (object: any): NewDiaryEntry => {
