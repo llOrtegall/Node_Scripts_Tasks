@@ -9,7 +9,7 @@
     "start": "ts-node src/index.ts",
     "build": "tsc",
     "serve": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon source/user/user.app.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -22,6 +22,7 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.10.8",
+    "@types/uuid": "^9.0.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
