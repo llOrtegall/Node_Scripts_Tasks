@@ -3,7 +3,7 @@ import { UserUseCase } from "../../app/userUseCase";
 import { Router } from "express";
 import { UserController } from "../controller/user.controller";
 import { MongoRepository } from "../respository/mongo.repository";
-
+import { MysqlRepository } from '../respository/mysql.repository'
 const route = Router();
 
 /**
@@ -11,11 +11,12 @@ const route = Router();
  */
 const useRepository = new MockRepository();
 const userRepo = new MongoRepository()
+const userRepoMySQL = new MysqlRepository()
 
 /**
  * TODO: Iniciamos Casos de usos
  */
-const userUseCase = new UserUseCase(userRepo)
+const userUseCase = new UserUseCase(userRepoMySQL)
 
 /**
  * TODO: Iniciar el usercontroller
