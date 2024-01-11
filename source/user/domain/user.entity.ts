@@ -1,4 +1,6 @@
-// TODO: Intentar mantener desacoplado el dominio de la infraestructura
+// TODO: Intentar mantener desacoplado lo máximo que se pueda de la infraestructura
+
+// * Evitar crear interfaces que entren en comflicto al momento de crear un nuevo repositorio
 
 export interface UserEntity {
     name: string;
