@@ -15,3 +15,29 @@ export const createUser = async (user: UserEntity) => {
 		return error
 	}
 }
+
+export const UserById = async (uuid: string) => {
+	try {
+		const pool = await DBInitMysql()
+		const sql = 'SELECT * FROM Users WHERE uuid = ?'
+
+		const [user] = await pool.query(sql, [uuid])
+		return user
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}
+
+export const UsersList = async () => {
+	try {
+		const pool = await DBInitMysql()
+		const sql = 'SELECT * FROM Users'
+
+		const [users] = await pool.query(sql)
+		return users
+	} catch (error) {
+		console.log(error)
+		return error
+	}
+}
