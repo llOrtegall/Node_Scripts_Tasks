@@ -1,21 +1,42 @@
-import { createPool, Pool } from 'mysql2/promise'
+import mysql from 'mysql2/promise'
+import type { RowDataPacket } from 'mysql2'
 
-let pool: Pool
+import { UserEntity } from '../../domain/user.entity'
 
-export const DBInitMysql = async () => {
-	if (!pool) {
-		pool = createPool({
-			host: `${process.env.DB_HOST}`,
-			user: `${process.env.DB_USER}`,
-			port: parseInt(`${process.env.DB_PORT}`),
-			password: `${process.env.DB_PASSWORD}`,
-			database: `${process.env.DB_NAME}`,
-			waitForConnections: true,
-			connectionLimit: 10,
-			queueLimit: 0
-		})
-		console.log('Database Mysql connected')
-	}
+const pool = mysql.createPool({
+	host: 'localhost',
+	user: 'root',
+	password: '123456',
+	port: 3010,
+	database: 'users'
+})
 
-	return pool
+export interface IUserRow extends UserEntity, RowDataPacket {
+	id: number,
+	createdAt: string,
+	updatedAt: string
+}
+
+async function SelectQuery<T>(queryString: string): Promise<Partial<T[]>> {
+	const [results] = await pool.execute(queryString)
+	return results as T[]
+}
+
+
+export const getAllUsers = async () => {
+	const users = await SelectQuery<IUserRow>('SELECT * FROM users')
+	return users
+}
+
+export const getUserByID = async (uuid: string) => {
+	const user = await SelectQuery<IUserRow>(`SELECT * FROM users WHERE uuid = '${uuid}'`)
+	return user[0]
+}
+
+export const registerUser = async (user: UserEntity) => {
+	const { name, email, description, uuid } = user
+
+	const result = await SelectQuery<IUserRow>(`INSERT INTO users (name, email, description, uuid) VALUES ('${name}', '${email}', '${description}', '${uuid}')`)
+	return result
+
 }
