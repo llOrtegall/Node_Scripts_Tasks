@@ -1,7 +1,7 @@
 import { UserEntity } from '../../domain/user.entity'
 import { UserRepository } from '../../domain/user.repository'
 
-import { getAllUsers, getUserByID, registerUser } from '../services/mysql.services'
+import { getAllUsersService, getUserByIDService, registerUserService } from '../services/mysql.services'
 import { IUserRow } from '../services/mysql.services'
 
 /**
@@ -10,17 +10,17 @@ import { IUserRow } from '../services/mysql.services'
 
 export class MysqlRepository implements UserRepository {
 	async findUserById(uuid: string): Promise<IUserRow> {
-		const user = await getUserByID(uuid)
+		const user = await getUserByIDService(uuid)
 		return user as IUserRow
 	}
 
 	async registerUser(userIn: UserEntity): Promise<IUserRow> {
-		const user = await registerUser(userIn)
+		const user = await registerUserService(userIn)
 		return user as IUserRow
 	}
 
 	async listUser(): Promise<IUserRow[]> {
-		const users = await getAllUsers()
+		const users = await getAllUsersService()
 		return users.filter((user): user is IUserRow => user !== undefined)
 	}
 }

@@ -1,21 +1,21 @@
 import { UserUseCase } from '../../app/userUseCase'
 import { Router } from 'express'
 import { UserController } from '../controller/user.controller'
-// import { MongoRepository } from '../respository/mongo.repository'
-import { MysqlRepository } from '../respository/mysql.repository'
+import { MongoRepository } from '../respository/mongo.repository'
+// import { MysqlRepository } from '../respository/mysql.repository'
 const route = Router()
 
 /**
  * TODO: Primero iniciar el repositorio 
  */
-// const userRepo = new MongoRepository()
-const userRepoMySQL = new MysqlRepository()
+const userRepo = new MongoRepository()
+// const userRepoMySQL = new MysqlRepository()
 
 /**
  * TODO: Iniciamos Casos de uso
  * * Inyectamos el repositorio
  */
-const userUseCase = new UserUseCase(userRepoMySQL)
+const userUseCase = new UserUseCase(userRepo)
 
 /**
  * TODO: Iniciar el usercontroller
