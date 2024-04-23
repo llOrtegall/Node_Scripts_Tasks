@@ -1,34 +1,20 @@
 {
-  "name": "my_api_node_and_express",
+  "name": "node_scripts_tasks",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/llOrtegall/My_API_Node_and_Express.git",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "dev": "nodemon ./src/index.js"
+  },
+  "repository": "https://github.com/llOrtegall/Node_Scripts_Tasks.git",
   "author": "llOrtegall <IvanOrtega_97@hotmail.com>",
   "license": "MIT",
-  "scripts": {
-    "start": "ts-node src/index.ts",
-    "build": "tsc",
-    "serve": "node dist/index.js",
-    "dev": "nodemon source/user/user.app.ts",
-    "lint": "eslint . --ext .ts"
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "mongoose": "^8.0.4",
-    "mysql2": "^3.7.0",
-    "nodemon": "^3.0.2",
-    "uuid": "^9.0.1"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^20.10.8",
-    "@types/uuid": "^9.0.7",
-    "@typescript-eslint/eslint-plugin": "^6.18.1",
-    "@typescript-eslint/parser": "^6.18.1",
-    "eslint": "^8.56.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "mysql2": "^3.9.7",
+    "node-cron": "^3.0.3"
   }
 }
