@@ -20,3 +20,24 @@ export interface ProductoPDV extends RowDataPacket {
   PROMO1: number;
   PROMO2: number;
 }
+
+export interface InforSucursal extends RowDataPacket {
+  ZONA: number;
+  CCOSTO: number;
+  CODIGO: number;
+  NOMBRE: string;
+  DIRECCION: string;
+  BARRIO: string;
+  LATITUD: string;
+  LONGITUD: string;
+  TIPO: string;
+  DISPOSITIVO: string;
+  CATEGORIA: string;
+  SUPERVISOR: string;
+  ARRENDATARIO: string;
+  ESTADO: string;
+  FECHASYS: string;
+  FECHA_ACCESO: string;
+  LOGIN: string;
+  VERSION: string;
+}
