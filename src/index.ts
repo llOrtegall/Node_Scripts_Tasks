@@ -1,20 +1,33 @@
-import { pool_metas, pool_test } from './connections/dbs.js'
-import { schedule } from 'node-cron'
+import { log } from 'console'
+import { pool_metas, pool_test } from './connections/dbs'
+//  import { schedule } from 'node-cron'
 
 
 const PRODUCTOS ='SUCURSAL,CHANCE,PAGAMAS,PAGATODO,GANE5,PATA_MILLONARIA,DOBLECHANCE,CHANCE_MILLONARIO,ASTRO,LOTERIA_FISICA,LOTERIA_VIRTUAL,BETPLAY,GIROS,SOAT,RECAUDOS,RECARGAS,PROMO1,PROMO2'
 
+const TODAY = new Date().toISOString().slice(0, 10)
 
 const productos_sucursales_yumbo_del_dia_actual = async () => {
   try {
     const connection = await pool_metas.getConnection()
 
-    const [rows] = await connection.query(`SELECT ${PRODUCTOS} FROM METASPRODUCTOS where FECHA = CURDATE() and ZONA = "39627"`)
-    return rows
+    const [rows] = await connection.execute(
+      `SELECT ${PRODUCTOS} FROM METASPRODUCTOS WHERE FECHA = ? AND ZONA = ?`,
+      [TODAY, "39627"]
+    );
+
+    return rows;
   } catch (error) {
     console.log(error);
   }
 }
+
+productos_sucursales_yumbo_del_dia_actual()
+  .then((productos) => {
+    // console.log(productos);
+  })
+
+/* 
 
 const datos_logueados_yumbo = async () => {
   try {
@@ -64,8 +77,6 @@ const insert_productos_in_tables_horas = async () => {
 
     console.log(productos_sucursales);
 
-    console.log(productos_sucursales.length);
-
     // for (let producto of productos_sucursales) {
     //   const {
     //     SUCURSAL: sucursal_name,
@@ -114,7 +125,8 @@ const insert_productos_in_tables_horas = async () => {
   }
 }
 
-insert_productos_in_tables_horas()
+*/
+// insert_productos_in_tables_horas()
 
 // schedule('*/20 * * * *', async () => {
 //   await insert_productos_in_tables_horas()
