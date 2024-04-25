@@ -32,7 +32,7 @@ const Crear_Tablas_Horas = async () => {
   try {
     const sucursales = await Info_Sucursales()
     sucursales.map(sucursal => {
-      ModifyQuery(pool_test, `CREATE TABLE IF NOT EXISTS horas${sucursal.CODIGO} (${CREATE_TABLES});`)
+      ModifyQuery(pool_test, `CREATE TABLE IF NOT EXISTS horas'${sucursal.CODIGO} (${CREATE_TABLES});`)
     })
     console.log('Tables created');
   } catch (error) {
@@ -40,26 +40,42 @@ const Crear_Tablas_Horas = async () => {
   }
 }
 
-// TODO: Crear_Tablas_Horas()
+interface Tables {
+  Tables_in_sucursales: string
+}
 
 const Insert_Data_Venta = async () => {
   try {
-    const sucursales = await Sucursales_Productos()    
-    const exist_tables = await SelectQuery(pool_metas, `SELECT SUCURSAL from METASPRODUCTOS where FECHA = ? and ZONA = ?`, [TODAY, ZONAYUMBO])
-    // TODO: PARA CREAR TABLA QUE NO EXISTA ModifyQuery(pool_test, `CREATE TABLE IF NOT EXISTS horas45532 (${CREATE_TABLES});`)
-    
-    /* sucursales.map(suc => {
-      ModifyQuery(pool_test, `INSERT INTO horas${suc.SUCURSAL} (
-        CHANCE,PAGAMAS,PAGATODO,GANE5,PATA_MILLONARIA,DOBLECHANCE,CHANCE_MILLONARIO,ASTRO,LOTERIA_FISICA,LOTERIA_VIRTUAL,BETPLAY,GIROS,SOAT,RECAUDOS,RECARGAS,PROMO1,PROMO2
-      ) VALUES (
-        ${suc.CHANCE},${suc.PAGAMAS},${suc.PAGATODO},${suc.GANE5},${suc.PATA_MILLONARIA},${suc.DOBLECHANCE},
-        ${suc.CHANCE_MILLONARIO},${suc.ASTRO},${suc.LOTERIA_FISICA},${suc.LOTERIA_VIRTUAL},${suc.BETPLAY},
-        ${suc.GIROS},${suc.SOAT},${suc.RECAUDOS},${suc.RECARGAS},${suc.PROMO1},${suc.PROMO2}
-      )`
-      )
+    const sucursales = await Sucursales_Productos()
+    const tables_created = await SelectQuery<Tables>(pool_test, `SHOW TABLES;`, [])
+
+    const tables = tables_created.map(table => table.Tables_in_sucursales)
+
+    sucursales.map(sucursal => {
+      if (tables.includes(`horas${sucursal.SUCURSAL}`)) {
+        ModifyQuery(pool_test,
+          `INSERT INTO horas${sucursal.SUCURSAL} (
+          CHANCE,PAGAMAS,PAGATODO,GANE5,PATA_MILLONARIA,DOBLECHANCE,CHANCE_MILLONARIO,ASTRO,LOTERIA_FISICA,LOTERIA_VIRTUAL,BETPLAY,GIROS,SOAT,RECAUDOS,RECARGAS,PROMO1,PROMO2
+        ) VALUES 
+        (
+          '${sucursal.CHANCE}', '${sucursal.PAGAMAS}', '${sucursal.PAGATODO}', '${sucursal.GANE5}', '${sucursal.PATA_MILLONARIA}', '${sucursal.DOBLECHANCE}', 
+          '${sucursal.CHANCE_MILLONARIO}', '${sucursal.ASTRO}', '${sucursal.LOTERIA_FISICA}', '${sucursal.LOTERIA_VIRTUAL}', '${sucursal.BETPLAY}', 
+          '${sucursal.GIROS}', '${sucursal.SOAT}', '${sucursal.RECAUDOS}', '${sucursal.RECARGAS}', '${sucursal.PROMO1}', '${sucursal.PROMO2}'
+        )
+        ;`)
+      } else {
+        ModifyQuery(pool_test,
+          `INSERT INTO horas${sucursal.SUCURSAL} (
+          CHANCE,PAGAMAS,PAGATODO,GANE5,PATA_MILLONARIA,DOBLECHANCE,CHANCE_MILLONARIO,ASTRO,LOTERIA_FISICA,LOTERIA_VIRTUAL,BETPLAY,GIROS,SOAT,RECAUDOS,RECARGAS,PROMO1,PROMO2
+        ) VALUES ( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 );`)
+      }
     })
-    */
-    console.log('Data inserted');
+
+    const hora = new Date().toLocaleTimeString()
+
+    console.log('Datos Insertados En tabla hora: ' + hora);
+    
+
   } catch (error) {
     console.log(error);
   }
