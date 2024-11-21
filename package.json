@@ -2,23 +2,22 @@
   "name": "node_scripts_tasks",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/llOrtegall/Node_Scripts_Tasks.git",
-  "author": "llOrtegall <IvanOrtega_97@hotmail.com>",
-  "license": "MIT",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "tsx --env-file=.env --watch ./src/index.ts",
+    "start": "node --env-file=.env ./dist/index.js",
     "build": "tsc"
   },
-  "devDependencies": {
-    "@types/dotenv": "^8.2.0",
-    "@types/node-cron": "^3.0.11",
-    "@types/node": "^20.12.7",
-    "typescript": "^5.4.5",
-    "nodemon": "^3.1.0"
-  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
-    "mysql2": "^3.9.7",
-    "node-cron": "^3.0.3",
-    "dotenv": "^16.4.5"
+    "oracledb": "6.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.9.1",
+    "@types/oracledb": "6.5.2",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
   }
 }
