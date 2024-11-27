@@ -70,6 +70,7 @@ async function main() {
   }
 }
 
+
 const job = new CronJob(
   '0 6-22 * * *', // cronTime: cada hora desde las 6 AM hasta las 10 PM
   main, // onTick
