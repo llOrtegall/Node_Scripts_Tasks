@@ -12,12 +12,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cron": "^3.2.1",
     "mysql2": "3.11.4",
     "sequelize": "6.37.5"
   },
   "devDependencies": {
     "@types/node": "22.9.1",
-    "typescript": "5.6.3",
-    "tsx": "4.19.2"
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
   }
 }

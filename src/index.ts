@@ -2,6 +2,7 @@ import { SUCURSALES_MULTIRED } from './contantes';
 import { MetaHora } from './model/ventaHoras';
 import { pool } from './connection/mysql';
 import { RowDataPacket } from 'mysql2';
+import { CronJob } from 'cron';
 
 interface QueryResult extends RowDataPacket {
   SUCURSAL: number;
@@ -15,6 +16,7 @@ interface QueryResult extends RowDataPacket {
 const aplanarString = (arr: number[]) => arr.map((el) => `'${el}'`).join(',');
 
 const getSucursales = async () => {
+  await MetaHora.sync();
   const [sucursales] = await pool.execute<QueryResult[]>(`
     SELECT SUCURSAL, CHANCE, PAGAMAS, PAGATODO, GANE5, ASTRO 
     FROM METASPRODUCTOS 
@@ -49,18 +51,31 @@ async function syncMetaHora(data: any[], sinDatos: any[]) {
   await MetaHora.bulkCreate(allData);
 }
 
-getSucursales()
-  .then(async (data) => {
-    const sinDatos = SUCURSALES_MULTIRED.filter(el => !data.find(d => d.SUCURSAL === el));
+async function main() {
+  try {
+    const data = await getSucursales();
+    const sinDatos = SUCURSALES_MULTIRED.filter(s => !data.map(d => d.SUCURSAL).includes(s));
 
-    await MetaHora.sync();
     await syncMetaHora(data, sinDatos);
-    
-    console.log('=========================================================');
-    console.log('Datos en 0: ', sinDatos.length);
-    console.log('Datos sincronizados: ', data.length);
-    console.log('Datos totales insertados: ', data.length + sinDatos.length);
-    console.log('Hora Inserción: ', new Date().toLocaleTimeString());
-  })
-  .catch(console.error);
 
+    console.log('=======================================================================');
+    console.log('N° Datos Sync: ', data.length);
+    console.log('N° Sucursales Sin Datos: ', sinDatos.length);
+    console.log('Total Datos Insertados: ', data.length + sinDatos.length);
+    
+  } catch (error) {
+    console.error(error);
+  } finally {
+    pool.end();
+  }
+}
+
+const job = new CronJob(
+  '0 6-22 * * *', // cronTime: cada hora desde las 6 AM hasta las 10 PM
+  main, // onTick
+  null, // onComplete
+  true, // start
+  'America/Bogota' // timeZone
+);
+
+job.start();
